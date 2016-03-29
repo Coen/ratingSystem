@@ -1,42 +1,40 @@
 //commentaar
-var aantalKliks = Math.ceil( 5*Math.random());
-var totaalScore = aantalKliks*Math.random()*5;
-var uitvoerAantal = document.getElementById('aantal');
-var uitvoerWaardering = document.getElementById('waardering');
-var sterrenKleur = Math.ceil(10*totaalScore/aantalKliks)/10;
-var deSterren = document.querySelectorAll('geen');
+var clicks = Math.ceil(9 * Math.random());
+var totalScore = clicks * Math.random() * 5;
+var output1 = document.getElementById('clicks');
+var output2 = document.getElementById('stars');
+var deSterren = document.querySelectorAll('.stars');
 
 function kleurSter(sterNummer, procent) {
   var naam = 's' + sterNummer;
   procent = Math.min(procent, 100);
-  document.getElementById(naam).style.width = procent+'%';
+  document.getElementById(naam).style.width = procent + '%';
 
 }
 
-kleurSter(3,50);
-
-function kleurDeSterren(waardering) {
-  for (var i = 2; i < 6; i++) {
-    kleurSter(i,waardering*100);
-    waardering --;
+function kleurDeSterren(stars) {
+  for (var i=1; i<6; i++) {
+    kleurSter(i, stars * 100);
+    stars--;
   }
 
 }
-function uitvoeren(){
-    uitvoerAantal.innerHTML = aantalKliks;
-    uitvoerWaardering.innerHTML = sterrenKleur;
-    kleurDeSterren(sterrenKleur);
-}
-uitvoeren();
 
-function verwerkKlik(){
-  aantalKliks ++;
-
-  var nummertje = this.getAttribute('data-role');
-  totaalScore += parseInt(nummertje);
-  uitvoeren();
+function exc() {
+  output1.innerHTML = clicks;
+  output2.innerHTML = ((10 * totalScore / clicks) / 10).toFixed(1);
+  kleurDeSterren(Math.ceil(10 * totalScore / clicks) / 10);
 }
 
-for(var i=0; i<deSterren.length; i++);{
-    deSterren[i].addEventListener('click', verwerkKlik);
+exc();
+
+function verwerkKlik() {
+  clicks ++;
+  var number = this.getAttribute('data-role');
+  totalScore += parseInt(number);
+  exc();
+}
+
+for (var i=0; i<deSterren.length; i++) {
+  deSterren[i].addEventListener('click', verwerkKlik);
 }
